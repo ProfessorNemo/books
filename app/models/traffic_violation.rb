@@ -1,0 +1,2 @@
+class TrafficViolation < ApplicationRecord
+end

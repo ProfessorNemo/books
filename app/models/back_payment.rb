@@ -1,0 +1,2 @@
+class BackPayment < ApplicationRecord
+end
