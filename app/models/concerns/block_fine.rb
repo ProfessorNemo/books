@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
+# запросы в данном модуле выполнять в хронологическом порядке с первого по последний
 module BlockFine
   extend ActiveSupport::Concern
 
   included do
-  # Для тех, кто уже оплатил штраф, вывести информацию о том, изменялась ли стандартная сумма штрафа
-  scope :fine1, lambda {
-    connection.select_all("SELECT  f.person, f.number_plate, f.violation,
+    # Для тех, кто уже оплатил штраф, вывести информацию о том, изменялась ли стандартная сумма штрафа
+    scope :fine1, lambda {
+      connection.select_all("SELECT  f.person, f.number_plate, f.violation,
                             CASE
                                 WHEN (f.sum_fine = tv.sum_fine) THEN 'Стандартная сумма штрафа'
                                 WHEN (f.sum_fine < tv.sum_fine) THEN 'Уменьшенная сумма штрафа'
@@ -14,7 +15,7 @@ module BlockFine
                             END AS description
                                 FROM fines f, traffic_violations tv
                                 WHERE tv.violation = f.violation and f.sum_fine IS NOT Null")
-  }
+    }
 
   # Занести в таблицу fine суммы штрафов, которые должен оплатить водитель, в соответствии с данными из
   # таблицы traffic_violations. При этом суммы заносить только в пустые поля столбца sum_fine.
@@ -99,4 +100,3 @@ module BlockFine
   }
   end
 end
-
