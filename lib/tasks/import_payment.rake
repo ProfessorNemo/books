@@ -24,5 +24,4 @@ namespace :import_payment do
       payment.save!
     end
   end
-
 end

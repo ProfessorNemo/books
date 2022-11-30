@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_28_220640) do
+ActiveRecord::Schema.define(version: 2022_11_29_161125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authors", primary_key: "author_id", id: :integer, default: nil, force: :cascade do |t|
+    t.string "name_author", limit: 50, null: false
+  end
 
   create_table "back_payments", id: :serial, force: :cascade do |t|
     t.string "person", limit: 30
@@ -21,6 +25,14 @@ ActiveRecord::Schema.define(version: 2022_11_28_220640) do
     t.string "violation", limit: 50
     t.decimal "sum_fine", precision: 8, scale: 2
     t.date "date_violation"
+  end
+
+  create_table "book_editions", primary_key: "book_edition_id", id: :integer, default: nil, force: :cascade do |t|
+    t.text "title", null: false
+    t.integer "author_id", null: false
+    t.integer "genre_id"
+    t.decimal "price", precision: 8, scale: 2
+    t.integer "amount", null: false
   end
 
   create_table "books", id: :serial, force: :cascade do |t|
@@ -37,6 +49,10 @@ ActiveRecord::Schema.define(version: 2022_11_28_220640) do
     t.check_constraint "buy >= 0", name: "buy_check"
   end
 
+  create_table "cities", primary_key: "city_id", id: :integer, default: nil, force: :cascade do |t|
+    t.string "name_city", limit: 50, null: false
+  end
+
   create_table "fines", id: :serial, force: :cascade do |t|
     t.string "person", limit: 30
     t.string "number_plate", limit: 6
@@ -44,6 +60,10 @@ ActiveRecord::Schema.define(version: 2022_11_28_220640) do
     t.decimal "sum_fine", precision: 8, scale: 2
     t.date "date_violation"
     t.date "date_payment"
+  end
+
+  create_table "genres", primary_key: "genre_id", id: :integer, default: nil, force: :cascade do |t|
+    t.string "name_genre", limit: 50, null: false
   end
 
   create_table "orders", id: :serial, force: :cascade do |t|
@@ -60,6 +80,13 @@ ActiveRecord::Schema.define(version: 2022_11_28_220640) do
     t.date "date_payment"
   end
 
+  create_table "supplies", primary_key: "supply_id", id: :integer, default: nil, force: :cascade do |t|
+    t.text "title", null: false
+    t.string "author", limit: 50, null: false
+    t.decimal "price", precision: 8, scale: 2
+    t.integer "amount", null: false
+  end
+
   create_table "traffic_violations", id: :serial, force: :cascade do |t|
     t.string "violation", limit: 50
     t.decimal "sum_fine", precision: 8, scale: 2
@@ -73,4 +100,6 @@ ActiveRecord::Schema.define(version: 2022_11_28_220640) do
     t.date "date_last"
   end
 
+  add_foreign_key "book_editions", "authors", primary_key: "author_id", name: "book_editions_author_id_fkey", on_delete: :cascade
+  add_foreign_key "book_editions", "genres", primary_key: "genre_id", name: "book_editions_genre_id_fkey", on_delete: :cascade
 end

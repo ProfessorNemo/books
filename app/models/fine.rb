@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class Fine < ApplicationRecord
-  include BlockFine
+  include One::BlockFine
 end
