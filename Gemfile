@@ -18,6 +18,7 @@ end
 
 group :development do
   gem 'listen', '~> 3.3'
+  gem 'rails-erd'
   gem 'rubocop', '~> 1.30', require: false
   gem 'rubocop-performance', '~> 1.14', require: false
   gem 'rubocop-rails', '~> 2.14', require: false
