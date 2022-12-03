@@ -1,5 +1,5 @@
 # books
-## SQL-запросы к таблицам БД "PostgreSQL" в Rails-приложении. Часть 1.\
+## SQL-запросы к таблицам БД "PostgreSQL" в Rails-приложении. Часть 1.
 
 ###### Ruby: `3.0.3` Rails: `6.1.6` Language: `Russian`
 
